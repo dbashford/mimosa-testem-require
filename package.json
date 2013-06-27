@@ -1,0 +1,35 @@
+{
+  "name": "mimosa-testem-require",
+  "version": "0.0.1",
+  "homepage": "http://www.mimosajs.com <= OR PUT YOUR GITHUB/WEBSITE",
+  "author": "David Bashford",
+  "description": "A advanced testem module for Mimosa that integrates with the mimosa-require module",
+  "contributors": [
+    {
+      "name": "David Bashford",
+      "email": "dbashford@hotmail.com"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dbashford/mimosa-testem-require"
+  },
+  "keywords": [
+    "mimosa",
+    "mmodule",
+    "testem",
+    "testing",
+    "requirejs"
+  ],
+  "dependencies": {
+    "logmimosa": "0.5.0"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=0.8"
+  },
+  "main": "./lib/index",
+  "scripts": {
+    "prepublish": "mimosa build"
+  }
+}
