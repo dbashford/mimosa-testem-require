@@ -1,39 +1,46 @@
 "use strict"
 
+path = require "path"
+
 exports.defaults = ->
-  ###
-  minify:
-    exclude:["\\.min\\."]
-  ###
-  {}
+  testemRequire:
+    assetFolder:".testemRequire"
+    testemConfig:
+      "launch_in_dev": ["Firefox", "Chrome"]
+      "launch_in_ci": ["PhantomJS"]
+    mochaSetup:
+      ui: 'bdd'
+
 
 exports.placeholder = ->
-  ###
   """
   \t
 
-    # minify:                  # Configuration for non-require minification/compression via uglify
-                               # using the --minify flag.
-      # exclude:[/\\.min\\./]    # List of regexes to exclude files when running minification.
-                               # Any path with ".min." in its name, like jquery.min.js, is assumed to
-                               # already be minified and is ignored by default. Override this property
-                               # if you have other files that you'd like to exempt from minification.
+    # testemRequire:                  # Configuration for the testem-require module
+      # specConvention: /_spec\\.js$/ # Convention for how test specs are named
+      # assetFolder: ".testemRequire" # Path from the root of the project to the folder that will
+                                      # contain all the testing assets that the testemRequire
+                                      # module maintains and writes. If the folder does not exist
+                                      # it will be created.
+      # overwriteAssets: true         # Determines if module will overwrite testing assets if newer
+                                      # assets are available.  Set this to false if you've tinkered
+                                      # with the assets that mimosa-testem-require devlivers,
+                                      # otherwise those changes will disappear.
+      # testemConfig:                   # Pass through values for the testem.json configuration.
+                                        # The module will write the testem.json for you
+        # "launch_in_dev": ["Firefox", "Chrome"] # In dev mode launches in Firefox and Chrome
+        # "launch_in_ci": ["PhantomJS"]          # In CI mode uses PhantomJS (must be installed)
+      # mochaSetup:                     # Setup for Mocha
+        # ui : 'bdd'                    # Mocha is set to bdd mode by default
   """
-  ###
-  ""
 
 exports.validate = (config, validators) ->
 
   errors = []
-  ###
-  if validators.ifExistsIsObject(errors, "minify config", config.minify)
-    if validators.ifExistsIsArray(errors, "minify.exclude", config.minify.exclude)
-      for ex in config.minify.exclude
-        unless typeof ex is "string"
-          errors.push "minify.exclude must be an array of strings"
-          break
+  if validators.ifExistsIsObject(errors, "testemRequire config", config.testemRequire)
+    if validators.ifExistsIsString(errors, "testemRequire.assetFolder", config.testemRequire.assetFolder)
+      config.testemRequire.assetFolderFull = path.join config.root, config.testemRequire.assetFolder
+    validators.ifExistsIsObject(errors, "testemRequire.testemConfig", config.testemRequire.testemConfig)
+    validators.ifExistsIsObject(errors, "testemRequire.mochaSetup", config.testemRequire.mochaSetup)
 
-  if errors.length is 0 and config.minify.exclude?.length > 0
-    config.minify.exclude = new RegExp config.minify.exclude.join("|"), "i"
-  ###
   errors

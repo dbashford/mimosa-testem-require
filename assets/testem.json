@@ -1,0 +1,6 @@
+{
+  "test_page": "test/runner.html",
+  "routes": {
+    "/js": "public/javascripts"
+  }
+}

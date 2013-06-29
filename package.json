@@ -22,7 +22,9 @@
     "requirejs"
   ],
   "dependencies": {
-    "logmimosa": "0.5.0"
+    "logmimosa": "0.5.0",
+    "wrench": "1.5.1",
+    "lodash": "1.3.1"
   },
   "license": "MIT",
   "engines": {
