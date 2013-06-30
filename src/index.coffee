@@ -28,7 +28,22 @@ registration = (mimosaConfig, register) ->
   register ['postBuild'], 'init', _writeStaticAssets
   register ['postBuild'], 'init', _writeTestemConfig
 
-  #register ['add','update','buildExtension'], 'beforeWrite',  _minifyJS, e.template
+  register ['add','update','buildFile'], 'afterCompile', _buildSpecs, e.javascript
+  register ['remove'], 'afterDelete', _removeSpec, e.javascript
+
+_buildSpecs = (mimosaConfig, options, next) ->
+  __specs mimosaConfig, options, (specPath) ->
+    if specFiles.indexOf(specPath) is -1
+      specFiles.push specPath
+
+  next()
+
+_removeSpec = (mimosaConfig, options, next) ->
+  __specs mimosaConfig, options, (specPath) ->
+    specFileLoc = specFiles.indexOf(specPath)
+    if specFileLoc > -1
+      specFiles.splice specFileLoc, 1
+  next()
 
 _ensureDirectories = (mimosaConfig, options, next) ->
   [mimosaConfig.testemRequire.assetFolderFull, clientFolder].forEach (folder) ->
@@ -62,12 +77,19 @@ _writeTestemConfig = (mimosaConfig, options, next) ->
 
   next()
 
+__specs = (mimosaConfig, options, manipulateSpecs) ->
+  for file in options.files
+    if mimosaConfig.testemRequire.specConvention.test(file.outputFileName)
+      specPath = file.outputFileName.replace(mimosaConfig.watch.compiledJavascriptDir + path.sep, "")
+      specPath = specPath.split(path.sep).join('/')
+      manipulateSpecs specPath
+
 __craftTestemConfig = (mimosaConfig, currentTestemConfig) ->
   currentTestemConfig.test_page = "#{mimosaConfig.testemRequire.assetFolder}/runner.html"
   javascriptRoot = mimosaConfig.watch.compiledJavascriptDir.replace(mimosaConfig.root + path.sep, "")
   unless currentTestemConfig.routes
     currentTestemConfig.routes = {}
-  currentTestemConfig.routes["/js"] = javascriptRoot
+  currentTestemConfig.routes["/js"] = javascriptRoot.split(path.sep).join('/')
   _.extend(currentTestemConfig, mimosaConfig.testemRequire.testemConfig)
 
 __writeAssets = (overwriteAssets, assets, folder) ->

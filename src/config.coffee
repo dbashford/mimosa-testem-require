@@ -4,6 +4,7 @@ path = require "path"
 
 exports.defaults = ->
   testemRequire:
+    specConvention: /_spec\.js$/
     assetFolder:".testemRequire"
     testemConfig:
       "launch_in_dev": ["Firefox", "Chrome"]
