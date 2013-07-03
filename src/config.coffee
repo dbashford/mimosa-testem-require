@@ -50,5 +50,6 @@ exports.validate = (config, validators) ->
     validators.ifExistsIsObject(errors, "testemRequire.testemConfig", config.testemRequire.testemConfig)
     validators.ifExistsIsObject(errors, "testemRequire.mochaSetup", config.testemRequire.mochaSetup)
     validators.ifExistsIsObject(errors, "testemRequire.requireConfig", config.testemRequire.requireConfig)
+    validators.ifExistsIsBoolean(errors, "testemRequire.overwriteAssets", config.testemRequire.overwriteAssets)
 
   errors
