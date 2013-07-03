@@ -36,6 +36,8 @@ registration = (mimosaConfig, register) ->
   register ['postBuild'], 'init', _writeTestemConfig
   register ['postBuild'], 'init', _buildRequireConfig
 
+  register ['preClean'], 'init', _cleanStaticClientAssets
+
   register ['add','update'], 'afterWrite', _buildRequireConfig, e.javascript
   register ['remove'], 'afterWrite', _buildRequireConfig, e.javascript
 
@@ -46,6 +48,18 @@ registration = (mimosaConfig, register) ->
   testVariablesPath = path.join mimosaConfig.testemRequire.assetFolderFull, "test_variables.js"
 
   testemSimple.registration mimosaConfig, register
+
+_cleanStaticClientAssets = (mimosaConfig, options, next) ->
+  clientAssets.map (clientAsset) ->
+    fileName = path.basename clientAsset
+    path.join clientFolder, fileName
+  .filter (clientAsset) ->
+    fs.existsSync clientAsset
+  .forEach (clientAsset) ->
+    logger.debug "Removing mimosa-testem-require asset [[ #{clientAsset} ]] removed"
+    fs.unlinkSync clientAsset
+
+  next()
 
 _buildRequireConfig = (mimosaConfig, options, next) ->
 
