@@ -4,6 +4,7 @@ path = require "path"
 
 exports.defaults = ->
   testemRequire:
+    overwriteAssets: true
     specConvention: /_spec\.js$/
     assetFolder:".testemRequire"
     testemConfig:
@@ -11,6 +12,7 @@ exports.defaults = ->
       "launch_in_ci": ["PhantomJS"]
     mochaSetup:
       ui: 'bdd'
+    requireConfig: null
 
 
 exports.placeholder = ->
@@ -31,8 +33,12 @@ exports.placeholder = ->
                                         # The module will write the testem.json for you
         # "launch_in_dev": ["Firefox", "Chrome"] # In dev mode launches in Firefox and Chrome
         # "launch_in_ci": ["PhantomJS"]          # In CI mode uses PhantomJS (must be installed)
-      # mochaSetup:                     # Setup for Mocha
-        # ui : 'bdd'                    # Mocha is set to bdd mode by default
+      # mochaSetup:                   # Setup for Mocha
+        # ui : 'bdd'                  # Mocha is set to bdd mode by default
+      # requireConfig: {}             # RequireJS configuration. By default the mimosa-require
+                                      # module is used by mimosa-testem-require to derive a
+                                      # requirejs config.  But if that derived config isn't right
+                                      # a config can be pasted here.
   """
 
 exports.validate = (config, validators) ->
@@ -43,5 +49,6 @@ exports.validate = (config, validators) ->
       config.testemRequire.assetFolderFull = path.join config.root, config.testemRequire.assetFolder
     validators.ifExistsIsObject(errors, "testemRequire.testemConfig", config.testemRequire.testemConfig)
     validators.ifExistsIsObject(errors, "testemRequire.mochaSetup", config.testemRequire.mochaSetup)
+    validators.ifExistsIsObject(errors, "testemRequire.requireConfig", config.testemRequire.requireConfig)
 
   errors
