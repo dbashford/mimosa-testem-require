@@ -4,9 +4,9 @@ path = require "path"
 
 exports.defaults = ->
   testemRequire:
-    overwriteAssets: true
+    safeAssets: []
     specConvention: /_spec\.js$/
-    assetFolder:".testemRequire"
+    assetFolder:".mimosa"
     testemConfig:
       "launch_in_dev": ["Firefox", "Chrome"]
       "launch_in_ci": ["PhantomJS"]
@@ -21,16 +21,16 @@ exports.placeholder = ->
 
     # testemRequire:                  # Configuration for the testem-require module
       # specConvention: /_spec\\.js$/ # Convention for how test specs are named
-      # assetFolder: ".testemRequire" # Path from the root of the project to the folder that will
+      # assetFolder: ".mimosa"        # Path from the root of the project to the folder that will
                                       # contain all the testing assets that the testemRequire
                                       # module maintains and writes. If the folder does not exist
                                       # it will be created.
-      # overwriteAssets: true         # Determines if module will overwrite testing assets if newer
-                                      # assets are available.  Set this to false if you've tinkered
-                                      # with the assets that mimosa-testem-require devlivers,
-                                      # otherwise those changes will disappear.
-      # testemConfig:                   # Pass through values for the testem.json configuration.
-                                        # The module will write the testem.json for you
+      # safeAssets: []                # An array of file names testem-require will not overwrite.
+                                      # By default testem-require overwrites any file it outputs.
+                                      # So, for instance, if you have a specific version of
+                                      # "mocha.js" you need to use, this setting should be ["mocha.js"]
+      # testemConfig:                 # Pass through values for the testem.json configuration.
+                                      # The module will write the testem.json for you
         # "launch_in_dev": ["Firefox", "Chrome"] # In dev mode launches in Firefox and Chrome
         # "launch_in_ci": ["PhantomJS"]          # In CI mode uses PhantomJS (must be installed)
       # mochaSetup:                   # Setup for Mocha
@@ -50,6 +50,6 @@ exports.validate = (config, validators) ->
     validators.ifExistsIsObject(errors, "testemRequire.testemConfig", config.testemRequire.testemConfig)
     validators.ifExistsIsObject(errors, "testemRequire.mochaSetup", config.testemRequire.mochaSetup)
     validators.ifExistsIsObject(errors, "testemRequire.requireConfig", config.testemRequire.requireConfig)
-    validators.ifExistsIsBoolean(errors, "testemRequire.overwriteAssets", config.testemRequire.overwriteAssets)
+    validators.ifExistsIsArrayOfStrings(errors, "testemRequire.safeAssets", config.testemRequire.safeAssets)
 
   errors

@@ -118,8 +118,8 @@ _ensureDirectories = (mimosaConfig, options, next) ->
 
 _writeStaticAssets = (mimosaConfig, options, next) ->
   tr = mimosaConfig.testemRequire
-  __writeAssets tr.overwriteAssets, runnerAssets, tr.assetFolderFull
-  __writeAssets tr.overwriteAssets, clientAssets, clientFolder
+  __writeAssets tr.safeAssets, runnerAssets, tr.assetFolderFull
+  __writeAssets tr.safeAssets, clientAssets, clientFolder
   next()
 
 _writeTestemConfig = (mimosaConfig, options, next) ->
@@ -157,16 +157,17 @@ __craftTestemConfig = (mimosaConfig, currentTestemConfig) ->
   currentTestemConfig.routes["/js"] = jsDir.split(path.sep).join('/')
   _.extend currentTestemConfig, mimosaConfig.testemRequire.testemConfig
 
-__writeAssets = (overwriteAssets, assets, folder) ->
-  assets.forEach (asset) ->
+__writeAssets = (safeAssets, assets, folder) ->
+  assets.filter (asset) ->
+    safeAssets.indexOf(path.basename(asset)) is -1
+  .forEach (asset) ->
     fileName = path.basename asset
     outFile = path.join folder, fileName
     if fs.existsSync outFile
-      if overwriteAssets
-        statInFile = fs.statSync asset
-        statOutFile = fs.statSync outFile
-        if statInFile.mtime > statOutFile.mtime
-          __writeFile asset, outFile
+      statInFile = fs.statSync asset
+      statOutFile = fs.statSync outFile
+      if statInFile.mtime > statOutFile.mtime
+        __writeFile asset, outFile
     else
       __writeFile asset, outFile
 
