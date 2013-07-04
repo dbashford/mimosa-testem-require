@@ -1,6 +1,6 @@
 {
   "name": "mimosa-testem-require",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "homepage": "http://www.mimosajs.com",
   "author": "David Bashford",
   "description": "A advanced testem module for Mimosa that integrates with the mimosa-require module",

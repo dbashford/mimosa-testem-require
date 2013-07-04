@@ -1,3 +1,6 @@
+// 'var' must be used here, else PhantomJS throws RangeError
+var should;
+
 (function() {
   require.config(window.MIMOSA_TEST_REQUIRE_CONFIG);
   require(['testem-require/mocha',
@@ -8,7 +11,7 @@
       require(['../testem'], function(){
         assert = chai.assert;
         expect = chai.expect;
-        var should = chai.should(); // 'var' must be used here, else PhantomJS throws RangeError
+        should = chai.should();
         chai.Assertion.includeStack = true;
         chai.use(sinonChai);
 

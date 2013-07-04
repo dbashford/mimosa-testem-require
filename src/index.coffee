@@ -73,7 +73,7 @@ _buildRequireConfig = (mimosaConfig, options, next) ->
 
   if requireConfig.shim?
     unless requireConfig.shim['testem-require']?
-      requireConfig.shim['testem-require'] = exports: 'mocha'
+      requireConfig.shim['testem-require/mocha'] = exports: 'mocha'
   else
     requireConfig.shim =
       'testem-require/mocha':
@@ -153,7 +153,8 @@ __craftTestemConfig = (mimosaConfig, currentTestemConfig) ->
   currentTestemConfig.test_page = "#{mimosaConfig.testemRequire.assetFolder}/runner.html"
   unless currentTestemConfig.routes
     currentTestemConfig.routes = {}
-  currentTestemConfig.routes["/js"] = mimosaConfig.watch.compiledJavascriptDir
+  jsDir = path.relative mimosaConfig.root, mimosaConfig.watch.compiledJavascriptDir
+  currentTestemConfig.routes["/js"] = jsDir.split(path.sep).join('/')
   _.extend currentTestemConfig, mimosaConfig.testemRequire.testemConfig
 
 __writeAssets = (overwriteAssets, assets, folder) ->
