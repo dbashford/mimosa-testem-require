@@ -117,11 +117,10 @@ _writeStaticAssets = (mimosaConfig, options, next) ->
   next()
 
 _writeTestemConfig = (mimosaConfig, options, next) ->
-  testemConfigPath = path.join mimosaConfig.root, "testem.json"
   currentTestemConfig = {}
-  if fs.existsSync testemConfigPath
+  if fs.existsSync mimosaConfig.testemSimple.configFile
     try
-      currentTestemConfig = require testemConfigPath
+      currentTestemConfig = require mimosaConfig.testemSimple.configFile
     catch err
       logger.fatal "Problem reading testem config, ", err
       process.exit 1
@@ -130,8 +129,8 @@ _writeTestemConfig = (mimosaConfig, options, next) ->
   testemConfigPretty = JSON.stringify testemConfig, null, 2
 
   unless JSON.stringify(currentTestemConfig, null, 2) is testemConfigPretty
-    logger.debug "Writing testem configuration to [[ #{testemConfigPath} ]]"
-    fs.writeFileSync testemConfigPath, testemConfigPretty
+    logger.debug "Writing testem configuration to [[ #{mimosaConfig.testemSimple.configFile} ]]"
+    fs.writeFileSync mimosaConfig.testemSimple.configFile, testemConfigPretty
 
   next()
 

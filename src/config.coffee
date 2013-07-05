@@ -3,10 +3,12 @@
 path = require "path"
 
 exports.defaults = ->
+  testemSimple:
+    configFile:".mimosa/testem.json"
   testemRequire:
     safeAssets: []
     specConvention: /_spec\.js$/
-    assetFolder:".mimosa"
+    assetFolder:".mimosa/testemRequire"
     testemConfig:
       "launch_in_dev": ["Firefox", "Chrome"]
       "launch_in_ci": ["PhantomJS"]
@@ -14,14 +16,13 @@ exports.defaults = ->
       ui: 'bdd'
     requireConfig: null
 
-
 exports.placeholder = ->
   """
   \t
 
     # testemRequire:                  # Configuration for the testem-require module
       # specConvention: /_spec\\.js$/ # Convention for how test specs are named
-      # assetFolder: ".mimosa"        # Path from the root of the project to the folder that will
+      # assetFolder: ".mimosa/testemRequire"        # Path from the root of the project to the folder that will
                                       # contain all the testing assets that the testemRequire
                                       # module maintains and writes. If the folder does not exist
                                       # it will be created.
@@ -51,5 +52,8 @@ exports.validate = (config, validators) ->
     validators.ifExistsIsObject(errors, "testemRequire.mochaSetup", config.testemRequire.mochaSetup)
     validators.ifExistsIsObject(errors, "testemRequire.requireConfig", config.testemRequire.requireConfig)
     validators.ifExistsIsArrayOfStrings(errors, "testemRequire.safeAssets", config.testemRequire.safeAssets)
+
+    config.testemSimple.configFile = path.join config.testemRequire.assetFolderFull, "testem.json"
+
 
   errors
