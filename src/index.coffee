@@ -9,6 +9,7 @@ logger = require "logmimosa"
 testemSimple = require "mimosa-testem-simple"
 
 config = require './config'
+test = require './command/test'
 
 specFiles = []
 requireConfig = {}
@@ -160,3 +161,4 @@ module.exports =
   defaults:        config.defaults
   placeholder:     config.placeholder
   validate:        config.validate
+  registerCommand: test

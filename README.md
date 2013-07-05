@@ -25,6 +25,23 @@ For more information regarding Mimosa, see http://mimosajs.com
 
 When mimosa starts up, `testem-require` will write all the assets and execute your tests.  It will then execute those tests every time a JavaScript file changes.  If all the tests pass, a message will say as much on the console and you will not be notified any other way.  If tests fail,  the console will have the details of the test failure and a Growl message will get sent letting you know a test has broken.
 
+## Command
+
+### mimosa testscript [ci]
+
+The `testscript` command will drop a platform appropriate script in the root of your project that you can use to execute your testem tests directory.  If you are writing tests or doing heavy test debugging, you will want to interact with testem without Mimosa getting in the way, or with Mimosa running in another process.  `testem-require` creates all the files, inlines your test output and lets you know when things are broken, but its not really the place to do heavy test coding/debugging.
+
+The script will be named test.[bat/sh]. The script takes a single option of ci.  When ci is passed in, testem will run in ci mode.
+
+```
+mimosa testscript
+```
+
+```
+test.sh
+test.sh ci
+```
+
 ## Default Config
 
 ```
