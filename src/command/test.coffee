@@ -15,7 +15,8 @@ fi
 """
 
 bat = """
-if %1 == "ci" (
+@echo off
+if "%1" == "ci" (
   testem ci --file CONFIG_FILE
 ) else (
   testem --file CONFIG_FILE
@@ -29,7 +30,7 @@ _test = (config) ->
     _writeBash config.testemSimple.configFile
 
   logger.success "Wrote test execution script to [[ #{outPath} ]]"
-  logger.info "To exeecute the test script, you will need to have testem installed globally. npm install -g testem"
+  logger.info "To execute the test script, you will need to have testem installed globally. npm install -g testem"
 
 _writeBash = (configFile) ->
   bash = bash.replace /CONFIG_FILE/g, configFile
