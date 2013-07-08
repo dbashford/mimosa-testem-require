@@ -34,13 +34,13 @@ _test = (config, opts) ->
 _writeBash = (configFile) ->
   bash = bash.replace /CONFIG_FILE/g, configFile
   outPath = path.join process.cwd(), "test.sh"
-  fs.writeFileSync outPath, bash
+  fs.writeFileSync outPath, bash, mode:0o0777
   outPath
 
 _writeBat = (configFile) ->
   bat = bat.replace /CONFIG_FILE/g, configFile
   outPath = path.join process.cwd(), "test.bat"
-  fs.writeFileSync outPath, bat
+  fs.writeFileSync outPath, bat, mode:0o0777
   outPath
 
 register = (program, retrieveConfig) ->
