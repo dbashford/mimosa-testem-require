@@ -11,6 +11,10 @@ This module incorporates [Sinon](http://sinonjs.org/), [Chia](http://chaijs.com/
 
 For more information regarding Mimosa, see http://mimosajs.com
 
+## Docs, bah, show me some code!
+
+Check out the [MimosaTestem demo app](https://github.com/dbashford/MimosaTestem) to see this module in action.
+
 ## Usage
 
 * `npm install -g phantomjs`
