@@ -7,7 +7,7 @@ exports.defaults = ->
     configFile:".mimosa/testem.json"
   testemRequire:
     safeAssets: []
-    specConvention: /_spec\.js$/
+    specConvention: /[_-]spec\.js$/
     assetFolder:".mimosa/testemRequire"
     testemConfig:
       "launch_in_dev": ["Firefox", "Chrome"]
@@ -21,7 +21,7 @@ exports.placeholder = ->
   \t
 
     # testemRequire:                  # Configuration for the testem-require module
-      # specConvention: /_spec\\.js$/ # Convention for how test specs are named
+      # specConvention: /[_-]spec\\.js$/ # Convention for how test specs are named
       # assetFolder: ".mimosa/testemRequire"        # Path from the root of the project to the folder that will
                                       # contain all the testing assets that the testemRequire
                                       # module maintains and writes. If the folder does not exist
@@ -54,6 +54,5 @@ exports.validate = (config, validators) ->
     validators.ifExistsIsArrayOfStrings(errors, "testemRequire.safeAssets", config.testemRequire.safeAssets)
 
     config.testemSimple.configFile = path.join config.testemRequire.assetFolderFull, "testem.json"
-
 
   errors

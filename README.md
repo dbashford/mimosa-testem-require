@@ -19,7 +19,7 @@ Check out the [MimosaTestem demo app](https://github.com/dbashford/MimosaTestem)
 
 * `npm install -g phantomjs` (If you are on Windows, this will not install phantomjs properly. You will need to [download phantomjs from the site](http://phantomjs.org/download.html) and add the executable to your `PATH`)
 * Add `'testem-require'` to your list of modules.  Mimosa will install the module for you when you start up.
-* Write tests!  By default `testem-require` considers any file compiled/copied to `watch.compiledDir` that ends with `_spec.js` a test. Code your specs in `watch.sourceDir` and you can code it in CoffeeScript, LiveScript, whatever. Mimosa will treat it like any other piece of CoffeeScript.
+* Write tests!  By default `testem-require` considers any file compiled/copied to `watch.compiledDir` that ends with `-spec.js` or `_spec.js` a test. Code your specs in `watch.sourceDir` and you can code it in CoffeeScript, LiveScript, whatever. Mimosa will treat it like any other piece of CoffeeScript.
 
 ## Functionality
 
@@ -51,7 +51,7 @@ test.sh ci
 ```
   testemRequire:
     safeAssets: []
-    specConvention: /_spec\.js$/
+    specConvention: /[_-]spec\.js$/
     assetFolder:".mimosa/testemRequire"
     testemConfig:
       "launch_in_dev": ["Firefox", "Chrome"]
