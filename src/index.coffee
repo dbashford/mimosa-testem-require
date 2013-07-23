@@ -65,7 +65,7 @@ _buildRequireConfig = (mimosaConfig, options, next) ->
 
   requireConfigString = JSON.stringify requireConfig, null, 2
   mochaSetupString =  JSON.stringify mimosaConfig.testemRequire.mochaSetup, null, 2
-  specFilesString = JSON.stringify specFiles, null, 2
+  specFilesString = JSON.stringify specFiles.sort(), null, 2
 
   outputString = """
       window.MIMOSA_TEST_REQUIRE_CONFIG = #{requireConfigString};
