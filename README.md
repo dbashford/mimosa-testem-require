@@ -3,13 +3,13 @@ mimosa-testem-require
 
 ## Overview
 
-This is a [Mimosa](http://mimosajs.com) module that integrates testem + mocha into your RequireJS-enabled Mimosa application.
+This is a [Mimosa](http://mimosa.io) module that integrates testem + mocha into your RequireJS-enabled Mimosa application.
 
 Client JavaScript testing requires a good deal of configuration to set up, as well as plenty of research and trial and error before you can start writing tests. The goal of this module is to keep the amount of configuration you need to create to a minimum.  Out of the box it requires no configuration. The module writes its own configuration derived from your project. Include the module and start writing tests!
 
 This module incorporates [Sinon](http://sinonjs.org/), [Chai](http://chaijs.com/), [Mocha](http://visionmedia.github.io/mocha/), [Testem](https://github.com/airportyh/testem) and [PhantomJS](http://phantomjs.org/).
 
-For more information regarding Mimosa, see http://mimosajs.com
+For more information regarding Mimosa, see http://mimosa.io
 
 ## Docs, bah, show me some code!
 
