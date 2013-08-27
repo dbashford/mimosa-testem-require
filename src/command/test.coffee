@@ -23,10 +23,14 @@ if "%1" == "ci" (
 """
 
 _test = (config, opts) ->
+  unless config.testemSimple?
+    return logger.error "testscript command used, but mimosa-testem-require not configured as project module."
+
+  relativePath = path.relative config.root, config.testemSimple.configFile
   outPath = if opts.windows or (not opts.bash and process.platform is "win32")
-    _writeBat config.testemSimple.configFile
+    _writeBat relativePath
   else
-    _writeBash config.testemSimple.configFile
+    _writeBash relativePath
 
   logger.success "Wrote test execution script to [[ #{outPath} ]]"
   logger.info "To execute the test script, you will need to have testem installed globally. npm install -g testem"
