@@ -11,6 +11,8 @@ This module incorporates [Sinon](http://sinonjs.org/), [Chai](http://chaijs.com/
 
 For more information regarding Mimosa, see http://mimosa.io
 
+Note: To use mimosa-testem-require with mimosa `v1.0.0-rc.3`, you need mimosa-testem-require `v0.6.5`
+
 ## Docs, bah, show me some code!
 
 Check out the [MimosaTestem demo app](https://github.com/dbashford/MimosaTestem) to see this module in action.

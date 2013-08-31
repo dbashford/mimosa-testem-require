@@ -45,7 +45,8 @@ registration = (mimosaConfig, register) ->
   register ['add','update'], 'afterWrite', _buildRequireConfig, e.javascript
   register ['remove'], 'afterWrite', _buildRequireConfig, e.javascript
 
-  register ['add','update','buildFile'], 'afterCompile', _buildSpecs, e.javascript
+  register ['add','update'], 'afterCompile', _buildSpecs, e.javascript
+  register ['buildFile'], 'init', _buildSpecs, e.javascript
   register ['remove'], 'afterDelete', _removeSpec, e.javascript
 
   clientFolder = path.join mimosaConfig.watch.compiledJavascriptDir, "testem-require"
