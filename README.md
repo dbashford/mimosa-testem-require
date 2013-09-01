@@ -35,7 +35,7 @@ When mimosa starts up, `testem-require` will write all the assets and execute yo
 
 ### mimosa testscript
 
-The `testscript` command will drop a platform appropriate script in the root of your project that you can use to execute your testem tests directory.  If you are writing tests or doing heavy test debugging, you will want to interact with testem without Mimosa getting in the way, or with Mimosa running in another process.  `testem-require` creates all the files, inlines your test output and lets you know when things are broken, but its not really the place to do heavy test coding/debugging.
+The `testscript` command will drop a platform appropriate script in the root of your project that you can use to execute your testem tests directly.  If you are writing tests or doing heavy test debugging, you will want to interact with testem directly and the script lets you do that. You will want to run this in conjunction with mimosa running, so that you tests get compiled/copied to the correct location and the configuration gets updated.  Another Mimosa user found that you can [run the script and Mimosa with one command](https://github.com/dbashford/mimosa-testem-require/issues/5#issuecomment-23616251), so you might want to try that out.  You can also run quick `mimosa build`s if you don't want to run Mimosa in unison with the test script.
 
 The script will be named test.[bat/sh]. The script takes a single option of ci.  When ci is passed in, testem will run in ci mode.
 
