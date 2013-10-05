@@ -64,7 +64,14 @@ _buildRequireConfig = (mimosaConfig, options, next) ->
   unless requireConfig.baseUrl
     requireConfig.baseUrl = "/js"
 
-  requireConfigString = JSON.stringify requireConfig, null, 2
+  # sort require config
+  newRequireConfig = {}
+  _.sortBy Object.keys(requireConfig), (k) ->
+    -(k.length)
+  .forEach (k) ->
+    newRequireConfig[k] = requireConfig[k]
+
+  requireConfigString = JSON.stringify newRequireConfig, null, 2
   mochaSetupString =  JSON.stringify mimosaConfig.testemRequire.mochaSetup, null, 2
   specFilesString = JSON.stringify specFiles.sort(), null, 2
 
