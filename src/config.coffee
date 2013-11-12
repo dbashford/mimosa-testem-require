@@ -6,6 +6,8 @@ exports.defaults = ->
   testemSimple:
     configFile:".mimosa/testem.json"
   testemRequire:
+    executeDuringBuild: true
+    executeDuringWatch: true
     safeAssets: []
     specConvention: /[_-](spec|test)\.js$/
     assetFolder:".mimosa/testemRequire"
@@ -21,6 +23,8 @@ exports.placeholder = ->
   \t
 
     # testemRequire:                  # Configuration for the testem-require module
+      # executeDuringBuild            # If true the tests will get executed during build.
+      # executeDuringWatch            # If true the tests will get executed during watch with each file change.
       # specConvention: /[_-](spec|test)\.js$/ # Convention for how test specs are named
       # assetFolder: ".mimosa/testemRequire"        # Path from the root of the project to the folder that will
                                       # contain all the testing assets that the testemRequire
@@ -46,6 +50,8 @@ exports.validate = (config, validators) ->
 
   errors = []
   if validators.ifExistsIsObject(errors, "testemRequire config", config.testemRequire)
+    validators.ifExistsIsBoolean(errors, "testemRequire.executeDuringBuild", config.testemRequire.executeDuringBuild)
+    validators.ifExistsIsBoolean(errors, "testemRequire.executeDuringWatch", config.testemRequire.executeDuringWatch)
     if validators.ifExistsIsString(errors, "testemRequire.assetFolder", config.testemRequire.assetFolder)
       config.testemRequire.assetFolderFull = path.join config.root, config.testemRequire.assetFolder
     validators.ifExistsIsObject(errors, "testemRequire.testemConfig", config.testemRequire.testemConfig)

@@ -52,6 +52,8 @@ test.sh ci
 
 ```
   testemRequire:
+    executeDuringBuild: true
+    executeDuringWatch: true
     safeAssets: []
     specConvention: /[_-](spec|test)\.js$/
     assetFolder:".mimosa/testemRequire"
@@ -63,6 +65,8 @@ test.sh ci
     requireConfig: null
 ```
 
+* `executeDuringBuild`: Determines whether mimosa will automatically execute the tests during build.
+* `executeDuringWatch`: Determines whether mimosa will automatically execute the tests during watch as files are changed.
 * `safeAssets`: You may choose to alter the assets that Mimosa writes, for instance to use your own version of mocha.  Mimosa by default will overwrite the files in this folder.  If you don't want your file overwritten, add the name of the file to this array.  Just the name, no paths necessary.
 * `specConvention`: This is the regex `testem-require` uses to identify your tests. It'll run this regex against every compiled file to determine if it is indeed a test and if it is, `testem-require` will include it in the list of tests to be run.
 *  `assetFolder`: This is the folder `testem-require` places its assets.

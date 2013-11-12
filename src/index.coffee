@@ -52,7 +52,9 @@ registration = (mimosaConfig, register) ->
   clientFolder = path.join mimosaConfig.watch.compiledJavascriptDir, "testem-require"
   testVariablesPath = path.join mimosaConfig.testemRequire.assetFolderFull, "test-variables.js"
 
-  testemSimple.registration mimosaConfig, register
+  if (mimosaConfig.testemRequire.executeDuringBuild and mimosaConfig.isBuild) or
+  (mimosaConfig.testemRequire.executeDuringWatch and mimosaConfig.isWatch)
+    testemSimple.registration mimosaConfig, register
 
 _buildRequireConfig = (mimosaConfig, options, next) ->
 
