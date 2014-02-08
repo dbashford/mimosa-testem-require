@@ -2,7 +2,7 @@ exec = require('child_process').exec
 path = require 'path'
 fs = require 'fs'
 
-logger = require 'logmimosa'
+logger = null
 
 bash = """
 #!/bin/bash
@@ -54,7 +54,8 @@ register = (program, retrieveConfig) ->
     .option("-b, --bash",    "force the generation of a bash script")
     .option("-w, --windows", "force the generation of a windows script")
     .action (opts) ->
-      retrieveConfig false, (config) ->
+      retrieveConfig false, false, (config) ->
+        logger = config.log
         _test config, opts
     .on '--help', =>
       logger.green(' This command will create a script to launch testem tests directly.')

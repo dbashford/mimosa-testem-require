@@ -5,7 +5,6 @@ fs = require "fs"
 
 wrench = require "wrench"
 _ = require "lodash"
-logger = require "logmimosa"
 testemSimple = require "mimosa-testem-simple"
 
 config = require './config'
@@ -17,6 +16,7 @@ clientFolder = null
 mimosaRequire = null
 lastOutputString = null
 testVariablesPath = null
+logger = null
 
 allAssets = [
   "mocha.css",
@@ -30,6 +30,7 @@ allAssets = [
   path.join __dirname, "..", "assets", asset
 
 registration = (mimosaConfig, register) ->
+  logger = mimosaConfig.log
   e = mimosaConfig.extensions
 
   unless mimosaConfig.testemRequire.requireConfig
