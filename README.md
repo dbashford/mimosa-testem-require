@@ -50,19 +50,29 @@ test.sh ci
 
 ## Default Config
 
-```
-  testemRequire:
-    executeDuringBuild: true
-    executeDuringWatch: true
-    safeAssets: []
-    specConvention: /[_-](spec|test)\.js$/
-    assetFolder:".mimosa/testemRequire"
-    testemConfig:
-      "launch_in_dev": ["Firefox", "Chrome"]
-      "launch_in_ci": ["PhantomJS"]
-    mochaSetup:
-      ui: 'bdd'
-    requireConfig: null
+```javascript
+testemRequire: {
+  executeDuringBuild: true,
+  executeDuringWatch: true,
+  safeAssets: [],
+  specConvention: /[_-](spec|test)\.js$/,
+  assetFolder:".mimosa/testemRequire",
+  testemConfig: {
+    "launch_in_dev": ["Firefox", "Chrome"],
+    "launch_in_ci": ["PhantomJS"]
+  },
+  mochaSetup: {
+    ui: 'bdd'
+  },
+  requireConfig: null
+}
+
+testemSimple: {
+  configFile: testemRequire.assetFolder + "testem.json",
+  port: null,
+  watch: [],
+  exclude:[],
+}
 ```
 
 * `executeDuringBuild`: Determines whether mimosa will automatically execute the tests during build.
@@ -73,3 +83,4 @@ test.sh ci
 *  `testemConfig`: This is testem's configuration.  `testem-require` uses this default, which just defines the browsers to run the tests in, and then amplifies it with a few other computed properties
 *  `mochaSetup`: This is a pass-through to the `mocha.setup` command.
 *  `requireConfig` This is the configuration used by require.js in your tests.  By default `testem-require` derives this from your project.  To see what it derives, look at `.mimosa/testemRequire/test-variables.js`.
+* `testemSimple`: this module wraps the [mimosa-testem-simple](https://github.com/dbashford/mimosa-testem-simple) module. It overrides the `testemSimple.configFile` property to point at `assetFolder` + `testem.json`.  The other testem-simple config can be updated/modified directly. See the [config for testem-simple](https://github.com/dbashford/mimosa-testem-simple#default-config) to see how you can use it via testem-require.
