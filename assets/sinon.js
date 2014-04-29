@@ -1,5 +1,5 @@
 /**
- * Sinon.JS 1.9.0, 2014/03/07
+ * Sinon.JS 1.9.1, 2014/04/29
  *
  * @author Christian Johansen (christian@cjohansen.no)
  * @author Contributors: https://github.com/cjohansen/Sinon.JS/blob/master/AUTHORS
@@ -73,6 +73,10 @@ var sinon = (function (formatio) {
 
     function isFunction(obj) {
         return typeof obj === "function" || !!(obj && obj.constructor && obj.call && obj.apply);
+    }
+
+    function isReallyNaN(val) {
+        return typeof val === 'number' && isNaN(val);
     }
 
     function mirrorProperties(target, source) {
@@ -176,8 +180,13 @@ var sinon = (function (formatio) {
             if (sinon.match && sinon.match.isMatcher(a)) {
                 return a.test(b);
             }
-            if (typeof a != "object" || typeof b != "object") {
-                return a === b;
+
+            if (typeof a != 'object' || typeof b != 'object') {
+                if (isReallyNaN(a) && isReallyNaN(b)) {
+                    return true;
+                } else {
+                    return a === b;
+                }
             }
 
             if (isElement(a) || isElement(b)) {
@@ -193,7 +202,7 @@ var sinon = (function (formatio) {
             }
 
             if (a instanceof RegExp && b instanceof RegExp) {
-              return (a.source === b.source) && (a.global === b.global) && 
+              return (a.source === b.source) && (a.global === b.global) &&
                 (a.ignoreCase === b.ignoreCase) && (a.multiline === b.multiline);
             }
 
@@ -2376,6 +2385,13 @@ if (typeof sinon == "undefined") {
 }
 
 (function (global) {
+    // node expects setTimeout/setInterval to return a fn object w/ .ref()/.unref()
+    // browsers, a number.
+    // see https://github.com/cjohansen/Sinon.JS/pull/436
+    var timeoutResult = setTimeout(function() {}, 0);
+    var addTimerReturnsObject = typeof timeoutResult === 'object';
+    clearTimeout(timeoutResult);
+
     var id = 1;
 
     function addTimer(args, recurring) {
@@ -2405,7 +2421,16 @@ if (typeof sinon == "undefined") {
             this.timeouts[toId].interval = delay;
         }
 
-        return toId;
+        if (addTimerReturnsObject) {
+            return {
+                id: toId,
+                ref: function() {},
+                unref: function() {}
+            };
+        }
+        else {
+            return toId;
+        }
     }
 
     function parseTime(str) {
