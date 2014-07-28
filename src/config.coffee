@@ -3,9 +3,8 @@
 path = require "path"
 fs = require "fs"
 
-testemSimple = require "mimosa-testem-simple"
-
 exports.defaults = ->
+  testemSimple = require "mimosa-testem-simple"
   defaults = testemSimple.defaults()
 
   defaults.testemRequire =
@@ -24,6 +23,7 @@ exports.defaults = ->
   defaults
 
 exports.placeholder = ->
+  testemSimple = require "mimosa-testem-simple"
   testemSimple.placeholder().replace("testem.json", ".mimosa/testemRequire/testem.json") +
   """
   \t

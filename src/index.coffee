@@ -3,12 +3,10 @@
 path = require "path"
 fs = require "fs"
 
-wrench = require "wrench"
 _ = require "lodash"
-testemSimple = require "mimosa-testem-simple"
 
 config = require './config'
-test = require './command/test'
+testCommand = require './command/test'
 
 specFiles = []
 requireConfig = {}
@@ -55,6 +53,7 @@ registration = (mimosaConfig, register) ->
 
   if (mimosaConfig.testemRequire.executeDuringBuild and mimosaConfig.isBuild) or
   (mimosaConfig.testemRequire.executeDuringWatch and mimosaConfig.isWatch)
+    testemSimple = require "mimosa-testem-simple"
     testemSimple.registration mimosaConfig, register
 
 _buildRequireConfig = (mimosaConfig, options, next) ->
@@ -107,6 +106,7 @@ _removeSpec = (mimosaConfig, options, next) ->
 _ensureDirectory = (mimosaConfig, options, next) ->
   folder = mimosaConfig.testemRequire.assetFolderFull
   unless fs.existsSync folder
+    wrench = require "wrench"
     wrench.mkdirSyncRecursive folder, 0o0777
   next()
 
@@ -172,4 +172,4 @@ module.exports =
   defaults:        config.defaults
   placeholder:     config.placeholder
   validate:        config.validate
-  registerCommand: test
+  registerCommand: testCommand
