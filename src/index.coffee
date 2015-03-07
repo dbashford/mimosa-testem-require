@@ -170,6 +170,5 @@ __writeFile = (inPath, outPath) ->
 module.exports =
   registration:    registration
   defaults:        config.defaults
-  placeholder:     config.placeholder
   validate:        config.validate
   registerCommand: testCommand

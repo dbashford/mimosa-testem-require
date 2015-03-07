@@ -1,6 +1,6 @@
 {
   "name": "mimosa-testem-require",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "homepage": "https://github.com/dbashford/mimosa-testem-require",
   "author": "David Bashford",
   "description": "A module for integrating test execution via testem and mocha into your Mimosa app",

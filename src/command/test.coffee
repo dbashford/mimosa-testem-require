@@ -47,15 +47,20 @@ _writeBat = (configFile) ->
   fs.writeFileSync outPath, bat, mode:0o0777
   outPath
 
-register = (program, retrieveConfig) ->
+register = (program, _logger, retrieveConfig) ->
+  logger = _logger
   program
     .command('testscript')
     .description("Create a script in the root directory that will launch testem tests")
     .option("-b, --bash",    "force the generation of a bash script")
     .option("-w, --windows", "force the generation of a windows script")
     .action (opts) ->
-      retrieveConfig false, false, (config) ->
-        logger = config.log
+
+      retrieveConfigOpts =
+        buildFirst: false
+        mdebug: false
+
+      retrieveConfig retrieveConfigOpts, (config) ->
         _test config, opts
     .on '--help', =>
       logger.green(' This command will create a script to launch testem tests directly.')
