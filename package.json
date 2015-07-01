@@ -27,7 +27,7 @@
   "dependencies": {
     "wrench": "1.5.8",
     "lodash": "2.4.1",
-    "mimosa-testem-simple": "1.1.1"
+    "mimosa-testem-simple": "1.2.0"
   },
   "license": "MIT",
   "engines": {
